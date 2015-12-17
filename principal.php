@@ -4,8 +4,7 @@
 <head>
     <title>Practica d'Oriol, Marta, Marc</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
 
 
@@ -15,22 +14,23 @@ spl_autoload_register(function ($classe) {
                             include $classe . '.php';
                         });
 ?>
-        
-
+      <header>
+       <h3>PBL de Oriol Mejias, Marta Grau i Marc Llobera</h3>
+      </header>  
+     <div id="content">
         <form action='Consultas.php' method='post'><!--aqui posarem el php on enviem els parmetre seleccionat -->
             <div class="alumnes">
-                <h3>Grafic de seccio d'alumnes:selecciones un alumne i ens informa de les notes de cada assignatura que cursen </h3>
+                <h3>Selecciona un alumne i veuras les notes de cada assignatura que cursa </h3>
                 <select id="nom_alumne_assignatura" name="nom_alumne_assignatura" class="selectpicker">
                     <?php
                     //Fem un carrega amb pdo del nom dels alumnes por pder-los seleccionar y treure grafiques 
-                            $usuari="root";
-                            $contrasenya="root";
-                            $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , $usuari ,
-                            $contrasenya);                    
-                            foreach( $gbd -> query ("SELECT nom_alumne from alumne") as $fila ) {
-                               echo "<option>".$fila["nom_alumne"]."</option>";
-                           }
-                                                  
+                        $usuari="root";
+                        $contrasenya="root";
+                        $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , $usuari ,
+                        $contrasenya);                    
+                        foreach( $gbd -> query ("SELECT nom_alumne from alumne") as $fila ) {
+                           echo "<option>".$fila["nom_alumne"]."</option>";
+                       }                                                 
                     ?>
                 </select>
                 <br>
@@ -38,8 +38,23 @@ spl_autoload_register(function ($classe) {
                 <br>
                 <input id="nom_Alum_Assig" name='nom_Alum_Assig' type='submit' value='Buscar' class='btn btn-primary'>
             </div>
-        </form>
-        
+        </form><br>
+        <h3>Consultes estatiques</h3>
+        <div class="consultes_estatiques">
+
+            <form action='Consultas.php' method='post'>
+                <input id="mitjaperCurs" name='mitjaperCurs' type='submit' value='Mitja Nota/Curs' class='btn btn-primary'>
+            </form><br>
+             <form action='Consultas.php' method='post'>
+                <input id="mitjaperAssignatura" name='mitjaperAssignatura' type='submit' value='Mitja Nota/Assignatura' class='btn btn-primary'>
+            </form><br>
+            <form action='Consultas.php' method='post'>
+                <input id="numAlumnesAssignatura" name='numAlumnesAssignatura' type='submit' value='Num Alumne/Assignatura' class='btn btn-primary'>
+            </form><br>
+            <form action='Consultas.php' method='post'>
+                <input id="numAlumnesCurs" name='numAlumnesCurs' type='submit' value='Num Alumne/Curs' class='btn btn-primary'>
+            </form><br>
+        </div>
         <form action='insertar.php' method='post'><!--php  per inserir    -->
             <div class="inserts">
                 <h3>Insereix alumnes</h3> 
@@ -64,7 +79,7 @@ spl_autoload_register(function ($classe) {
                 <input id="assignatura" name='assignatura' type='submit' value='Insertar' class='btn btn-primary'>
             </div>
         </form>
-
+    </div>
 
        
 </body>

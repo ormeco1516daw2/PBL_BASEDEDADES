@@ -3,9 +3,8 @@
 <html lang="ca">
 
 <head>
-    <title>Insercions</title>
+    <title>Consultes</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -21,8 +20,20 @@
 
 if (isset($_POST['nom_Alum_Assig'])) {
     nom_Alum_Assig();
-} else if (isset($_POST['assignatura'])) {
-    assignatura();
+} 
+ if (isset($_POST['mitjaperCurs'])) {
+    mitjaperCurs();
+}
+
+ if (isset($_POST['mitjaperAssignatura'])) {
+    mitjaperAssignatura();
+}
+
+if (isset($_POST['numAlumnesAssignatura'])) {
+    numAlumnesAssignatura();
+}
+if (isset($_POST['numAlumnesCurs'])) {
+    numAlumnesCurs();
 }
 
 
@@ -49,10 +60,122 @@ function nom_Alum_Assig() {
     }
 
 
+function mitjaperCurs() {
+    $mysqli = mysqli_connect("localhost","root","root","escola");
+    $resultado = mysqli_query($mysqli,"SELECT codi_curs FROM curs");//les sentencies no es posen mai a la iteració
+    $sentencia = $mysqli -> prepare("SELECT avg(c.NOTA) FROM cursen c join assignatura a on c.codi_assignatura=a.codi_assignatura WHERE a.codi_curs = ?" );//ha d'estar fora
+        $filas=array();
+        $error=array();
+        //$json_response=array();
+        $array_notes = array();
+        
+            while($fila=mysqli_fetch_assoc($resultado)){
+                 $filas['codi_curs'] = (int)$fila['codi_curs'];
+                  $codi_curs=$filas['codi_curs'];
+                  echo $codi_curs." ";                                 
+                 $sentencia->bind_param('s',$codi_curs);
+                 $sentencia->execute();
+                 $sentencia->bind_result($nota);
+                 if ($sentencia->fetch())
+                {
+                    if($nota==null){
+                      $nota=0;
+                    }
+                    array_push($array_notes, $nota);
+                   echo $nota." ";
+                   //$sentencia->close(); 
+                }                           
+            }             
+        
+}
 
+function mitjaperAssignatura() {
+        
+   $mysqli = mysqli_connect("localhost","root","root","escola");
+   $resultado = mysqli_query($mysqli,"SELECT codi_assignatura from assignatura");//les sentencies no es posen mai a la iteració
+   $sentencia = $mysqli -> prepare("SELECT avg(c.NOTA) FROM cursen c join assignatura a on c.codi_assignatura=a.codi_assignatura WHERE a.codi_assignatura = ?" );//ha d'estar fora
+   $filas=array();
+   $error=array();
+   //$json_response=array();
+   $array_notes = array();
+    
+    while($fila=mysqli_fetch_assoc($resultado)){
+         $filas['codi_assignatura'] = $fila['codi_assignatura'];
+          $codi_assignatura=$filas['codi_assignatura'];
+          echo $codi_assignatura." ";                                 
+         $sentencia->bind_param('s',$codi_assignatura);
+         $sentencia->execute();
+         $sentencia->bind_result($nota);
+         if ($sentencia->fetch())
+        {
+            if($nota==null){
+                $nota=0;
+            }
+            array_push($array_notes, $nota);
+           echo $nota." ";
+           //$sentencia->close(); 
+        }                           
+    } 
+}
+
+
+function numAlumnesAssignatura() {
+   $mysqli = mysqli_connect("localhost","root","root","escola");
+   $resultado = mysqli_query($mysqli,"SELECT codi_assignatura from assignatura");//les sentencies no es posen mai a la iteració
+   $sentencia = $mysqli -> prepare("select count(codi_alumne) from cursen where codi_assignatura=?" );//ha d'estar fora
+   $filas=array();
+   $error=array();
+   //$json_response=array();
+   $array_num_alumne = array();
+    
+    while($fila=mysqli_fetch_assoc($resultado)){
+         $filas['codi_assignatura'] = $fila['codi_assignatura'];
+          $codi_assignatura=$filas['codi_assignatura'];
+          echo $codi_assignatura." ";                                 
+         $sentencia->bind_param('s',$codi_assignatura);
+         $sentencia->execute();
+         $sentencia->bind_result($num_alumne);
+         if ($sentencia->fetch()){
+        
+            array_push($array_num_alumne, $num_alumne);
+           echo $num_alumne." ";
+           //$sentencia->close(); 
+        }                           
+    } 
+}
+
+
+function numAlumnesCurs(){
+    
+    $mysqli = mysqli_connect("localhost","root","root","escola");
+    $resultado = mysqli_query($mysqli,"SELECT codi_curs FROM curs");//les sentencies no es posen mai a la iteració
+    $sentencia = $mysqli -> prepare("select count(c.codi_alumne) from cursen c join assignatura a on a.codi_assignatura=c.codi_assignatura where a.codi_curs=?" );//ha d'estar fora
+    $filas=array();
+    $error=array();
+    //$json_response=array();
+    $array_num_alumne = array();
+        
+    while($fila=mysqli_fetch_assoc($resultado)){
+         $filas['codi_curs'] = $fila['codi_curs'];
+          $codi_curs=$filas['codi_curs'];
+          echo $codi_curs." ";                                 
+         $sentencia->bind_param('s',$codi_curs);
+         $sentencia->execute();
+         $sentencia->bind_result($num_alumne);
+         if ($sentencia->fetch())
+        {
+            
+            array_push($array_num_alumne, $num_alumne);
+           echo $num_alumne." ";
+           //$sentencia->close(); 
+        }                           
+    }
+}
+
+
+    
 
 /*
-
    notesAlumnes();
     function notasAlumnes() {
         $mysqli = mysqli_connect("localhost","root","root","escola");
@@ -73,116 +196,6 @@ function nom_Alum_Assig() {
 	   echo json_encode($json_response);
         mysqli_close($mysqli);
     }
-
-function mitjaperCurs() {
-     $curs=1;
-     $array_notes = [];
-     $mysqli = mysqli_connect("localhost","root","root","escola");
-     $sentencia = $mysqli -> prepare("SELECT avg(c.NOTA) FROM cursen c join assignatura a on c.codi_assignatura=a.codi_assignatura WHERE a.codi_curs = ?" );
-     $sentencia->bind_param("s",$curs);
-     $sentencia->execute();
-     $sentencia->bind_result($nota);
-    while ($sentencia->fetch())
-    {
-        array_push($array_notes, $nota);
-        $curs++;
-    }
-        
-        
-       echo json_encode($json_response);
-        mysqli_close($mysqli);
-    }
-
-
-function mitjaperAssignatura() {
-     $i=0;
-     $assignatura = array("CAT_1", "CAT_2", "CAT_3", "CAT_4","CAT_5","CAT_6","MAT_1", "MAT_2", "MAT_3", "MAT_4","MAT_5","MAT_6","NAT_1", "NAT_2", "NAT_3", "NAT_4","NAT_5","NAT_6");
-     $array_notes = [];
-     $mysqli = mysqli_connect("localhost","root","root","escola");
-     $sentencia = $mysqli -> prepare("SELECT avg(c.NOTA) FROM cursen c join assignatura a on c.codi_assignatura=a.codi_assignatura WHERE a.codi_assignatura = ?" );
-     $sentencia->bind_param("s",$assignatura[]);
-     $sentencia->execute();
-     $sentencia->bind_result($nota);
-    while ($sentencia->fetch())
-    {
-        
-        array_push($assignatura[$i], $nota);
-        $i++;
-    }
-        
-        
-       echo json_encode($json_response);
-        mysqli_close($mysqli);
-    }
-
-
-/*function numAlumnesAssignatura() {
-     $curs=1;
-     $array_numAlum=[];
-     $assignatura = array("CAT_1", "CAT_2", "CAT_3", "CAT_4","CAT_5","CAT_6","MAT_1", "MAT_2", "MAT_3", "MAT_4","MAT_5","MAT_6","NAT_1", "NAT_2", "NAT_3", "NAT_4","NAT_5","NAT_6");
-     $mysqli = mysqli_connect("localhost","root","root","escola");
-     $sentencia = $mysqli -> prepare("select count(codi_alumne),codi_assignatura from cursen where codi_assignatura=?" );
-     $sentencia->bind_param("s",$assignatura[]);
-     $sentencia->execute();
-     $sentencia->bind_result($numAlum);
-    while ($sentencia->fetch())
-    {
-
-        $array_numAlum[$assignatura[i]] = $numAlum;
-        //array_push($array_numAlum, $numAlum);
-        $i++;
-    }
-        
-        
-       echo json_encode($json_response);
-        mysqli_close($mysqli);
-    }*/
-/*
-function numAlumnesAssignatura() {
-     $array_numAlum=[];
-     $i=0;
-     $assignatura = array("CAT_1", "CAT_2", "CAT_3", "CAT_4","CAT_5","CAT_6","MAT_1", "MAT_2", "MAT_3", "MAT_4","MAT_5","MAT_6","NAT_1", "NAT_2", "NAT_3", "NAT_4","NAT_5","NAT_6");
-     $mysqli = mysqli_connect("localhost","root","root","escola");
-     $sentencia = $mysqli -> prepare("select count(codi_alumne),codi_assignatura from cursen where codi_assignatura=?" );
-     $sentencia->bind_param("s",$assignatura[]);
-     $sentencia->execute();
-     $sentencia->bind_result($numAlum);
-    while ($sentencia->fetch())
-    {
-
-        $array_numAlum[$assignatura[$i]] = $numAlum;
-        //array_push($array_numAlum, $numAlum);
-        $i++;
-    }
-        
-        
-       echo json_encode($json_response);
-        mysqli_close($mysqli);
-    }
-
-
-function numAlumnesCurs(){
-     $curs=1;
-     $array_numAlum=[];
-     $mysqli = mysqli_connect("localhost","root","root","escola");
-     $sentencia = $mysqli -> prepare("select count(c.codi_alumne) from cursen c join assignatura a on a.codi_assignatura=c.codi_assignatura where a.codi_curs=?" );
-     $sentencia->bind_param("s",$curs);
-     $sentencia->execute();
-     $sentencia->bind_result($numAlum);
-    while ($sentencia->fetch())
-    {
-
-        array_push($array_numAlum, $numAlum);
-        $curs++;
-    }
-        
-        
-       echo json_encode($json_response);
-        mysqli_close($mysqli);
-    }
-  
-
-
 */
 
 //}
