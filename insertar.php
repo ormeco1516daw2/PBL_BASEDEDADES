@@ -19,9 +19,14 @@
 <?php
 if (isset($_POST['alumne'])) {
     alumne();
-} else if (isset($_POST['assignatura'])) {
+} 
+if (isset($_POST['assignatura'])) {
     assignatura();
 }
+if (isset($_POST['Elimin_Alum'])) {
+    Elimin_Alum();
+}
+
 
 function alumne(){
     $mysqli = new mysqli( "localhost" , "root" , "root" , "escola");
