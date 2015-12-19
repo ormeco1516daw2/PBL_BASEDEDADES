@@ -38,7 +38,7 @@ spl_autoload_register(function ($classe) {
                     ?>
                 </select>
                 
-                <input id="nom_Alum_Assig" name='nom_Alum_Assig' type='submit' value='Buscar' class='btn btn-primary'>
+                <input id="nom_Alum_Assig" name='nom_Alum_Assig' type='submit' value='Buscar'>
             </div>
         </form><br>
 
@@ -58,7 +58,7 @@ spl_autoload_register(function ($classe) {
                     ?>
                 </select>
                 
-                <input id="Assig_AproSusp" name='Assig_AproSusp' type='submit' value='Buscar' class='btn btn-primary'>
+                <input id="Assig_AproSusp" name='Assig_AproSusp' type='submit' value='Buscar' >
             
         </form><br>
 
@@ -68,40 +68,40 @@ spl_autoload_register(function ($classe) {
         <div class="consultes_estatiques">
 
             <form action='Consultas.php' method='post'>
-                <input id="mitjaperCurs" name='mitjaperCurs' type='submit' value='Mitja Nota/Curs' class='btn btn-primary'>
+                <input id="mitjaperCurs" name='mitjaperCurs' type='submit' value='Mitja Nota/Curs'>
             </form><br>
              <form action='Consultas.php' method='post'>
-                <input id="mitjaperAssignatura" name='mitjaperAssignatura' type='submit' value='Mitja Nota/Assignatura' class='btn btn-primary'>
+                <input id="mitjaperAssignatura" name='mitjaperAssignatura' type='submit' value='Mitja Nota/Assignatura'>
             </form><br>
             <form action='Consultas.php' method='post'>
-                <input id="numAlumnesAssignatura" name='numAlumnesAssignatura' type='submit' value='Num Alumne/Assignatura' class='btn btn-primary'>
+                <input id="numAlumnesAssignatura" name='numAlumnesAssignatura' type='submit' value='Num Alumne/Assignatura'>
             </form><br>
             <form action='Consultas.php' method='post'>
-                <input id="numAlumnesCurs" name='numAlumnesCurs' type='submit' value='Num Alumne/Curs' class='btn btn-primary'>
+                <input id="numAlumnesCurs" name='numAlumnesCurs' type='submit' value='Num Alumne/Curs'>
             </form><br>
         </div>
         <form action='insertar.php' method='post'><!--php  per inserir    -->
             <div class="inserts">
                 <h3>Insereix alumnes</h3> 
                 Nom del alumne:<br>
-                <input id="nom" name="nom" type='text'  class='btn btn-primary'><br>
+                <input id="nom" name="nom" type='text'><br>
                 Data naixament:<br>
-                <input id="data_naix" name="data_naix"  type='date'  class='btn btn-primary'>
+                <input id="data_naix" name="data_naix"  type='date'>
                <!-- Assignatura que cursa(Introdueix una assignatura despres podras introduir mes assignatures):<br>
                 <input id="assignatura" type='date'  class='btn btn-primary'>
                 Nota de l'assignatura:<br>
                 <input id="nota" type='date'  class='btn btn-primary'> -->
-                <input id="alumne" name='alumne' type='submit' value='Insertar' class='btn btn-primary'>
+                <input id="alumne" name='alumne' type='submit' value='Insertar'>
             </div>
         </form>
         <form action='insertar.php' method='post'><!--php  per inserir    -->
             <div class="inserts">
                 <h3>Insereix assignatura</h3> 
                 Nom assignatura:<br>
-                <input id="nom_assig" name="nom_assig" type='text'  class='btn btn-primary'><br>
+                <input id="nom_assig" name="nom_assig" type='text'><br>
                 Curs on es realitza<br>
-                <input id="curs" name="curs" type='number' min="1" max="6"  class='btn btn-primary'><br>              
-                <input id="assignatura" name='assignatura' type='submit' value='Insertar' class='btn btn-primary'>
+                <input id="curs" name="curs" type='number' min="1" max="6"><br>              
+                <input id="assignatura" name='assignatura' type='submit' value='Insertar'>
             </div>
         </form>
         <form action='insertar.php' method='post'><!--aqui posarem el php on enviem els parmetre seleccionat -->
@@ -120,7 +120,7 @@ spl_autoload_register(function ($classe) {
                     ?>
                 </select>
                 
-                <input id="Elimin_Alum" name='Elimin_Alum' type='submit' value='Eliminar' class='btn btn-primary'>
+                <input id="Elimin_Alum" name='Elimin_Alum' type='submit' value='Eliminar'>
             </div>
         </form><br>
 
@@ -150,8 +150,8 @@ spl_autoload_register(function ($classe) {
                      //  }                                                 
                     ?>-->
                 </select>
-                <input id="nota" name="nota" type='number' min="0" max="10"  class='btn btn-primary'><br>
-                <input id="Modifica_nota" name='Modifica_nota' type='submit' value='Modificar' class='btn btn-primary'>
+                <input id="nota" name="nota" type='number' min="0" max="10"><br>
+                <input id="Modifica_nota" name='Modifica_nota' type='submit' value='Modificar' >
             </div>
         </form><br>
     </div>

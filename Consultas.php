@@ -80,7 +80,7 @@ function CursAproSusp() {
     $mysqli = mysqli_connect("localhost","root","root","escola");
     $nom_assignatura = $_POST['nom_assignatura'];
     //echo $nom_alumne;
-    
+    $array_Frase = array("aprobats","suspesos");//Array per pasar al imagemagic sera el nom que surt abaix 
     $array_assignatura = array();
     $array_apro_sus = array();
     $sentencia = $mysqli -> prepare("SELECT count(nota) FROM cursen where codi_assignatura= ? and nota>=5");
@@ -98,7 +98,7 @@ function CursAproSusp() {
         {   
             array_push($array_assignatura, $nom_assignatura);
             echo $nom_assignatura;
-            array_push($array_apro_sus, $num_apro);
+            array_push($array_apro_sus, $num_apro);//Array per pasar al imagemagic el primer valor son aprobats i el segon suspesos
             echo $num_apro;  
         }
          if ($sentencia1 -> fetch ())
