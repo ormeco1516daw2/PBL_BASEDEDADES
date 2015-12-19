@@ -128,9 +128,9 @@ function nom_Alum_Assig() {
     $sentencia -> execute ();
         while ($sentencia->fetch())
         {   
-            array_push($array_assignatura, $codi_assignatura);
+            array_push($array_assignatura, $codi_assignatura);//Assignatures que li pasarem al imgmagiik
             echo $codi_assignatura;
-            array_push($array_notes, $nota);
+            array_push($array_notes, $nota);//Notes que li pasarem al imgmagik
             echo $nota;
             
         }
@@ -145,10 +145,12 @@ function mitjaperCurs() {
         $error=array();
         //$json_response=array();
         $array_notes = array();
+        $array_codi_curs = array();
         
             while($fila=mysqli_fetch_assoc($resultado)){
                  $filas['codi_curs'] = (int)$fila['codi_curs'];
                   $codi_curs=$filas['codi_curs'];
+                   array_push($array_codi_curs, $codi_curs);//Array dels cursos que agafarem per el imgmagiic
                   echo $codi_curs." ";                                 
                  $sentencia->bind_param('s',$codi_curs);
                  $sentencia->execute();
@@ -158,7 +160,7 @@ function mitjaperCurs() {
                     if($nota==null){
                       $nota=0;
                     }
-                    array_push($array_notes, $nota);
+                    array_push($array_notes, $nota);//Array de les mitjes que agafarem per el imgmagiic
                    echo $nota." ";
                    //$sentencia->close(); 
                 }                           
@@ -175,10 +177,12 @@ function mitjaperAssignatura() {
    $error=array();
    //$json_response=array();
    $array_notes = array();
+   $array_codi_assignatura = array();
     
     while($fila=mysqli_fetch_assoc($resultado)){
          $filas['codi_assignatura'] = $fila['codi_assignatura'];
           $codi_assignatura=$filas['codi_assignatura'];
+          array_push($array_codi_assignatura, $codi_assignatura);//Array de les assignatures que agafarem per el imgmagiic
           echo $codi_assignatura." ";                                 
          $sentencia->bind_param('s',$codi_assignatura);
          $sentencia->execute();
@@ -188,7 +192,7 @@ function mitjaperAssignatura() {
             if($nota==null){
                 $nota=0;
             }
-            array_push($array_notes, $nota);
+            array_push($array_notes, $nota);//Array de les mitjes que agafarem per el imgmagiic
            echo $nota." ";
            //$sentencia->close(); 
         }                           
@@ -204,17 +208,20 @@ function numAlumnesAssignatura() {
    $error=array();
    //$json_response=array();
    $array_num_alumne = array();
+   $array_codi_assignatura = array();
+   
     
     while($fila=mysqli_fetch_assoc($resultado)){
          $filas['codi_assignatura'] = $fila['codi_assignatura'];
           $codi_assignatura=$filas['codi_assignatura'];
+          array_push($array_codi_assignatura, $codi_assignatura);//Array de les assignatures que agafarem per el imgmagiic
           echo $codi_assignatura." ";                                 
          $sentencia->bind_param('s',$codi_assignatura);
          $sentencia->execute();
          $sentencia->bind_result($num_alumne);
          if ($sentencia->fetch()){
         
-            array_push($array_num_alumne, $num_alumne);
+            array_push($array_num_alumne, $num_alumne);//Array del numero d'alumnes que agafarem per el imgmagiic
            echo $num_alumne." ";
            //$sentencia->close(); 
         }                           
@@ -231,10 +238,12 @@ function numAlumnesCurs(){
     $error=array();
     //$json_response=array();
     $array_num_alumne = array();
+    $array_codi_curs = array();
         
     while($fila=mysqli_fetch_assoc($resultado)){
          $filas['codi_curs'] = $fila['codi_curs'];
           $codi_curs=$filas['codi_curs'];
+          array_push($array_codi_curs, $codi_curs);//Array dels cursos que agafarem per el imgmagiic
           echo $codi_curs." ";                                 
          $sentencia->bind_param('s',$codi_curs);
          $sentencia->execute();
@@ -242,7 +251,7 @@ function numAlumnesCurs(){
          if ($sentencia->fetch())
         {
             
-            array_push($array_num_alumne, $num_alumne);
+            array_push($array_num_alumne, $num_alumne);//Array del numero d'alumnes que agafarem per el imgmagiic
            echo $num_alumne." ";
            //$sentencia->close(); 
         }                           
