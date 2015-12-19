@@ -5,10 +5,13 @@
     <title>Practica d'Oriol, Marta, Marc</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="./css/style.css">
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script src="./js/AjaxAssig.js"></script>
+    
 </head>
 
 
-<body>
+<body >
     <?php
 spl_autoload_register(function ($classe) {
                             include $classe . '.php';
@@ -41,7 +44,7 @@ spl_autoload_register(function ($classe) {
 
         <form action='Consultas.php' method='post'><!--aqui posarem el php on enviem els parmetre seleccionat -->
             
-                <h3>Selecciona una assignatura i veuras el nombre d'aprobats i els de suspesos //per desenvolupar </h3>
+                <h3>Selecciona una assignatura i veuras el nombre d'aprobats i els de suspesos </h3>
                 <select id="nom_assignatura" name="nom_assignatura" class="selectpicker">
                     <?php
                     //Fem un carrega amb pdo del nom dels alumnes por pder-los seleccionar y treure grafiques 
@@ -60,25 +63,6 @@ spl_autoload_register(function ($classe) {
         </form><br>
 
 
-        <form action='Consultas.php' method='post'><!--aqui posarem el php on enviem els parmetre seleccionat -->
-            
-                <h3>Selecciona un curs i veuras el nombre d'aprobats i els de suspesos //per desenvolupar</h3>
-                <select id="nom_curs" name="nom_curs" class="selectpicker">
-                    <?php
-                    //Fem un carrega amb pdo del nom dels alumnes por pder-los seleccionar y treure grafiques 
-                        $usuari="root";
-                        $contrasenya="root";
-                        $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , $usuari ,
-                        $contrasenya);                    
-                        foreach( $gbd -> query ("SELECT codi_curs from curs") as $fila ) {
-                           echo "<option>".$fila["codi_curs"]."</option>";
-                       }                                                 
-                    ?>
-                </select>
-                
-                <input id="Curs_AproSusp" name='Curs_AproSusp' type='submit' value='Buscar' class='btn btn-primary'>
-            
-        </form><br>
 
         <h2><u>Consultes estatiques</u></h2>
         <div class="consultes_estatiques">
@@ -137,6 +121,37 @@ spl_autoload_register(function ($classe) {
                 </select>
                 
                 <input id="Elimin_Alum" name='Elimin_Alum' type='submit' value='Eliminar' class='btn btn-primary'>
+            </div>
+        </form><br>
+
+         <form action='insertar.php' method='post'><!--aqui posarem el php on enviem els parmetre seleccionat -->
+            <div class="alumnes">
+                <h3>Selecciona un alumne i una assignatura per modificar una nota </h3>
+                <select id="Modifica_alum" name="Modifica_alum" class="selectpicker">
+                    <?php
+                     $usuari="root";
+                        $contrasenya="root";
+                        $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , $usuari ,
+                        $contrasenya);                    
+                        foreach( $gbd -> query ("SELECT nom_alumne from alumne") as $fila ) {
+                           echo "<option>".$fila["nom_alumne"]."</option>";
+                       }                                                 
+                    ?>
+                </select>
+                
+                <select id="Modifica_assig" name="Modifica_assig" class="selectpicker">
+                    <!--<?php
+                    // $usuari="root";
+                      //  $contrasenya="root";
+                        //$gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , $usuari ,
+                       // $contrasenya);                    
+                        //foreach( $gbd -> query ("SELECT codi_assignatura from assignatura") as $fila ) {
+                        //   echo "<option>".$fila["codi_assignatura"]."</option>";
+                     //  }                                                 
+                    ?>-->
+                </select>
+                <input id="nota" name="nota" type='number' min="0" max="10"  class='btn btn-primary'><br>
+                <input id="Modifica_nota" name='Modifica_nota' type='submit' value='Modificar' class='btn btn-primary'>
             </div>
         </form><br>
     </div>

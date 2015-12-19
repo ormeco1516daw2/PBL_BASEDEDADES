@@ -26,7 +26,9 @@ if (isset($_POST['assignatura'])) {
 if (isset($_POST['Elimin_Alum'])) {
     Elimin_Alum();
 }
-
+if (isset($_POST['Modifica_nota'])) {
+    Modi_Nota();
+}
 
 function alumne(){
     $mysqli = new mysqli( "localhost" , "root" , "root" , "escola");
@@ -80,6 +82,57 @@ function assignatura(){
     $sentencia -> execute ();
 }
 
+ function Elimin_Alum(){
+     try {
+        $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , 'root' , 'root' ,
+        array( PDO :: ATTR_PERSISTENT => true ));
+        echo "Conectado\n" ;
+        } catch ( Exception $e ) {
+        die( "problema de connexio: " . $e -> getMessage ());
+        }
+        try {
+        $gbd -> setAttribute ( PDO :: ATTR_ERRMODE , PDO :: ERRMODE_EXCEPTION );
+        $gbd -> beginTransaction ();
+        $gbd -> exec ( "insert into staff (id, first, last) values (23, 'Joe', 'Bloggs')" );
+        $gbd -> exec ( "insert into salarychange (id, amount, changedate)
+        values (23, 50000, NOW())" );
+        $gbd -> commit ();
+        } catch ( Exception $e ) {
+        $gbd -> rollBack ();
+        echo "Error: " . $e -> getMessage ();
+    } 
+}
 
+ function Modi_Nota(){
+    
+     $mysqli = mysqli_connect("localhost","root","root","escola");
+     $nom_alumne = $_POST['Modifica_alum'];
+     $sentencia1 = $mysqli -> prepare("SELECT codi_alumne FROM alumne where nom_alumne=?" );//ha d'estar fora                           
+     $sentencia1->bind_param('s',$nom_alumne);
+     $sentencia1->bind_result($codi_alumne);
+     $sentencia1->execute();
+     echo $codi_alumne;
+         if ($sentencia1->fetch())
+        {
+           $codi_alumne =$codi_alumne;
+           
+        }
+    try {
+        $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , 'root' , 'root' );
+    } catch ( Exception $e ) {
+        die( "problema de connexio: " . $e -> getMessage ());
+    }
+ 
+    
+    $assig = $_POST['Modifica_assig'];
+    $nota = $_POST['nota'];
+    //echo $codi_assignatura;
+    $sentencia = $gbd -> prepare ( "Update cursen Set nota = :nota Where codi_alumne= :codi_alumne and codi_assignatura=:codi_assignatura");
+    $sentencia -> bindParam (':nota', $nota );
+    $sentencia -> bindParam (':codi_alumne', $codi_alumne);
+    $sentencia -> bindParam (':codi_assignatura', $assig);    
+    $sentencia -> execute ();
+
+ }
 
 ?>

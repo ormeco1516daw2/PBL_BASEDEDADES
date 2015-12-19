@@ -35,6 +35,83 @@ if (isset($_POST['numAlumnesAssignatura'])) {
 if (isset($_POST['numAlumnesCurs'])) {
     numAlumnesCurs();
 }
+if (isset($_POST['Assig_AproSusp'])) {
+    AssigAproSusp();
+}
+
+
+function AssigAproSusp() {
+    
+    $mysqli = mysqli_connect("localhost","root","root","escola");
+    $nom_assignatura = $_POST['nom_assignatura'];
+    //echo $nom_alumne;
+    
+    $array_assignatura = array();
+    $array_apro_sus = array();
+    $sentencia = $mysqli -> prepare("SELECT count(nota) FROM cursen where codi_assignatura= ? and nota>=5");
+    $sentencia -> bind_param ( 's', $nom_assignatura );
+    $sentencia->bind_result($num_apro);
+    $sentencia -> execute ();
+    $usuari="root";
+    $contrasenya="root";
+    $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , $usuari ,$contrasenya);
+    $sentencia1 = $gbd -> prepare ( "SELECT count(nota) FROM cursen where codi_assignatura= :nom_assignatura and nota<5" );
+    $sentencia1 -> bindParam ( ':nom_assignatura' , $nom_assignatura );
+    $sentencia1->bindColumn(1, $num_susp);
+    $sentencia1 -> execute ();
+        if ($sentencia->fetch())
+        {   
+            array_push($array_assignatura, $nom_assignatura);
+            echo $nom_assignatura;
+            array_push($array_apro_sus, $num_apro);
+            echo $num_apro;  
+        }
+         if ($sentencia1 -> fetch ())
+        {   
+          
+            array_push($array_apro_sus, $num_susp);
+            echo $num_susp;  
+        }
+    }
+
+
+function CursAproSusp() {
+    
+    $mysqli = mysqli_connect("localhost","root","root","escola");
+    $nom_assignatura = $_POST['nom_assignatura'];
+    //echo $nom_alumne;
+    
+    $array_assignatura = array();
+    $array_apro_sus = array();
+    $sentencia = $mysqli -> prepare("SELECT count(nota) FROM cursen where codi_assignatura= ? and nota>=5");
+    $sentencia -> bind_param ( 's', $nom_assignatura );
+    $sentencia->bind_result($num_apro);
+    $sentencia -> execute ();
+    $usuari="root";
+    $contrasenya="root";
+    $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , $usuari ,$contrasenya);
+    $sentencia1 = $gbd -> prepare ( "SELECT count(nota) FROM cursen where codi_assignatura= :nom_assignatura and nota<5" );
+    $sentencia1 -> bindParam ( ':nom_assignatura' , $nom_assignatura );
+    $sentencia1->bindColumn(1, $num_susp);
+    $sentencia1 -> execute ();
+        if ($sentencia->fetch())
+        {   
+            array_push($array_assignatura, $nom_assignatura);
+            echo $nom_assignatura;
+            array_push($array_apro_sus, $num_apro);
+            echo $num_apro;  
+        }
+         if ($sentencia1 -> fetch ())
+        {   
+          
+            array_push($array_apro_sus, $num_susp);
+            echo $num_susp;  
+        }
+    }
+
+
+
+
 
 
 function nom_Alum_Assig() {
