@@ -29,6 +29,10 @@ if (isset($_POST['Elimin_Alum'])) {
 if (isset($_POST['Modifica_nota'])) {
     Modi_Nota();
 }
+if (isset($_POST['alta_assignatura'])) {
+    alta_assignatura();
+}
+
 
 function alumne(){
     $mysqli = new mysqli( "localhost" , "root" , "root" , "escola");
@@ -83,24 +87,28 @@ function assignatura(){
 }
 
  function Elimin_Alum(){
-     try {
-        $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , 'root' , 'root' ,
-        array( PDO :: ATTR_PERSISTENT => true ));
-        echo "Conectado\n" ;
-        } catch ( Exception $e ) {
-        die( "problema de connexio: " . $e -> getMessage ());
+     $mysqli = mysqli_connect("localhost","root","root","escola");
+     $nom_alumne = $_POST['Elimina_alumne'];
+     $sentencia1 = $mysqli -> prepare("SELECT codi_alumne FROM alumne where nom_alumne=?" );//ha d'estar fora                           
+     $sentencia1->bind_param('s',$nom_alumne);
+     $sentencia1->bind_result($codi_alumne);
+     $sentencia1->execute();
+     echo $codi_alumne;
+         if ($sentencia1->fetch())
+        {
+           $codi_alumne =$codi_alumne;
+           
         }
-        try {
-        $gbd -> setAttribute ( PDO :: ATTR_ERRMODE , PDO :: ERRMODE_EXCEPTION );
-        $gbd -> beginTransaction ();
-        $gbd -> exec ( "insert into staff (id, first, last) values (23, 'Joe', 'Bloggs')" );
-        $gbd -> exec ( "insert into salarychange (id, amount, changedate)
-        values (23, 50000, NOW())" );
-        $gbd -> commit ();
-        } catch ( Exception $e ) {
-        $gbd -> rollBack ();
-        echo "Error: " . $e -> getMessage ();
-    } 
+    try {
+        $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , 'root' , 'root' );
+    } catch ( Exception $e ) {
+        die( "problema de connexio: " . $e -> getMessage ());
+    }
+ 
+    //echo $codi_assignatura;
+    $sentencia = $gbd -> prepare ( "DELETE FROM alumne WHERE codi_alumne = :codi_alumne"); 
+    $sentencia -> bindParam (':codi_alumne', $codi_alumne);    
+    $sentencia -> execute ();
 }
 
  function Modi_Nota(){
@@ -134,5 +142,40 @@ function assignatura(){
     $sentencia -> execute ();
 
  }
+function alta_assignatura(){
+
+
+    $mysqli = mysqli_connect("localhost","root","root","escola");
+    $nom_alumne = $_POST['nom_alta_alumne_assignatura'];
+    //echo $nom_alumne;
+    
+    $sentencia1 = $mysqli -> prepare("SELECT codi_alumne from ALUMNE where nom_alumne=?");
+    $sentencia1 -> bind_param ( 's', $nom_alumne );
+    $sentencia1->bind_result($codi_alumne);
+    $sentencia1-> execute ();
+        if ($sentencia1->fetch())
+        {   
+           $codi_alumne=$codi_alumne;
+        }
+        //echo $codi_alumne;
+    try {
+            $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , 'root' , 'root' );
+        } catch ( Exception $e ) {
+            die( "problema de connexio: " . $e -> getMessage ());
+        }
+     
+        
+        $assig = $_POST['nom_alta_assignatura'];
+        $nota = 0;
+        //echo $codi_assignatura;
+        $sentencia = $gbd -> prepare ( "INSERT INTO cursen (codi_assignatura, codi_alumne, nota)
+    VALUES (:codi_assignatura, :codi_alumne, :nota)");
+        $sentencia -> bindParam (':codi_assignatura', $assig );
+        $sentencia -> bindParam (':codi_alumne', $codi_alumne);
+        $sentencia -> bindParam (':nota', $nota);    
+        $sentencia -> execute ();
+}
+
+
 
 ?>

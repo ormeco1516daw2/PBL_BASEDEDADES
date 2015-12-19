@@ -94,6 +94,39 @@ spl_autoload_register(function ($classe) {
                 <input id="alumne" name='alumne' type='submit' value='Insertar'>
             </div>
         </form>
+         <form action='insertar.php' method='post'><!--php  per inserir    -->
+            <div class="inserts">
+                <h3>Dona d'alta un alumne en una assignatura</h3> 
+                Nom del alumne:<br>
+                <select id="nom_alta_alumne_assignatura" name="nom_alta_alumne_assignatura" class="selectpicker">
+                    <?php
+                    //Fem un carrega amb pdo del nom dels alumnes por pder-los seleccionar y treure grafiques 
+                        $usuari="root";
+                        $contrasenya="root";
+                        $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , $usuari ,
+                        $contrasenya);                    
+                        foreach( $gbd -> query ("SELECT nom_alumne from alumne") as $fila ) {
+                           echo "<option>".$fila["nom_alumne"]."</option>";
+                       }                                                 
+                    ?>
+                </select><br>
+                Assignatura:<br>
+                <select id="nom_alta_assignatura" name="nom_alta_assignatura" class="selectpicker">
+                    <?php
+                    //Fem un carrega amb pdo del nom dels alumnes por pder-los seleccionar y treure grafiques 
+                        $usuari="root";
+                        $contrasenya="root";
+                        $gbd = new PDO ( 'mysql:host=localhost;dbname=escola' , $usuari ,
+                        $contrasenya);                    
+                        foreach( $gbd -> query ("SELECT codi_assignatura from assignatura") as $fila ) {
+                           echo "<option>".$fila["codi_assignatura"]."</option>";
+                       }                                                 
+                    ?>
+                </select>
+                
+                <input id="alta_assignatura" name='alta_assignatura' type='submit' value='Alta'>
+            </div>
+        </form>
         <form action='insertar.php' method='post'><!--php  per inserir    -->
             <div class="inserts">
                 <h3>Insereix assignatura</h3> 
