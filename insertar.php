@@ -33,7 +33,11 @@ if (isset($_POST['alta_assignatura'])) {
     alta_assignatura();
 }
 
-
+/**
+  * Funció alumne
+  * Li pasem  per el metode post el codi alumne, nom alumne, data de naixamet   
+  * Insertem en la base de dades en la taula alumne un alumne nou
+  */
 function alumne(){
     try{
         $mysqli = new mysqli( "localhost" , "root" , "root" , "escola");
@@ -67,7 +71,11 @@ function alumne(){
     }
 
 }
-
+/**
+  * Funció assignatura
+  * Li pasem  per el metode post el codi assignatura, nom assignatura, curs   
+  * Insertem en la base de dades en la taula assignatura un assignatura nou
+  */
 
 function assignatura(){
     try{
@@ -96,6 +104,12 @@ function assignatura(){
       echo"No s'ha pogut insertar la assignatura!";
     }
 }
+
+/**
+  * Funció Elimin_Alum
+  * Li pasem  per el metode post el nom del alumne   
+  * realitzem una consulta per extreure el codi alumne amb aquest codi eliminem l'alumne en qüestió
+  */
 
  function Elimin_Alum(){
     try{
@@ -127,6 +141,11 @@ function assignatura(){
     }
 }
 
+/**
+  * Funció Modi_Nota
+  * Li pasem  per el metode post el nom del alumne 
+  * realitzem una consulta per extreure el codi alumne amb aquest codi fem un update  a la taula cursen
+  */
  function Modi_Nota(){
      try{
          $mysqli = mysqli_connect("localhost","root","root","escola");
@@ -162,6 +181,12 @@ function assignatura(){
     }
 
  }
+
+ /**
+  * Funció alta_assignatura
+  * Li pasem  per el metode post el nom del alumne i el nom de l'assignatura 
+  * realitzem una consulta per extreure el codi alumne amb aquest codi fem un insert a la taula cursen
+  */
 function alta_assignatura(){
 
     try{

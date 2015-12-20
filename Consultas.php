@@ -39,7 +39,11 @@ if (isset($_POST['Assig_AproSusp'])) {
     AssigAproSusp();
 }
 
-
+/**
+  * Funció AssigAproSusp
+  * Li pasem  per el metode post el nom_assignatura  
+  * Fem la consulta y ens retorna en dos arrays array assignatura i el array amb el nombre d'aprobat y de suspesos
+  */
 function AssigAproSusp() {
     
     $mysqli = mysqli_connect("localhost","root","root","escola");
@@ -74,7 +78,11 @@ function AssigAproSusp() {
         }
     }
 
-
+/**
+  * Funció nom_Alum_Assig
+  * Li pasem  per el metode post el nom_assignatura  
+  * Fem la consulta y ens retorna en dos arrays array assignatura i el array amb les notes
+  */
 
 function nom_Alum_Assig() {
     
@@ -98,7 +106,11 @@ function nom_Alum_Assig() {
         }
     }
 
-
+/**
+  * Funció mitjaperCurs
+  *   
+  * Fem la consulta y ens retorna en dos arrays array cursos i el array amb les notes mitjes
+  */
 function mitjaperCurs() {
     $mysqli = mysqli_connect("localhost","root","root","escola");
     $resultado = mysqli_query($mysqli,"SELECT codi_curs FROM curs");//les sentencies no es posen mai a la iteració
@@ -129,7 +141,11 @@ function mitjaperCurs() {
             }             
         
 }
-
+/**
+  * Funció mitjaperAssignatura
+  *   
+  * Fem la consulta y ens retorna en dos arrays array assignatures i el array amb les notes mitjes
+  */
 function mitjaperAssignatura() {
         
    $mysqli = mysqli_connect("localhost","root","root","escola");
@@ -161,7 +177,11 @@ function mitjaperAssignatura() {
     } 
 }
 
-
+/**
+  * Funció numAlumnesAssignatura
+  *   
+  * Fem la consulta y ens retorna en dos arrays array assignatures i el array amb el numeros d'alumne per assignatura
+  */
 function numAlumnesAssignatura() {
    $mysqli = mysqli_connect("localhost","root","root","escola");
    $resultado = mysqli_query($mysqli,"SELECT codi_assignatura from assignatura");//les sentencies no es posen mai a la iteració
@@ -190,7 +210,11 @@ function numAlumnesAssignatura() {
     } 
 }
 
-
+/**
+  * Funció numAlumnesCurs
+  *   
+  * Fem la consulta y ens retorna en dos arrays array cursos i el array amb nombre d'alumne per curs
+  */
 function numAlumnesCurs(){
     
     $mysqli = mysqli_connect("localhost","root","root","escola");
