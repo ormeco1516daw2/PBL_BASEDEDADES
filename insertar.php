@@ -108,7 +108,7 @@ function assignatura(){
 /**
   * Funció Elimin_Alum
   * Li pasem  per el metode post el nom del alumne   
-  * realitzem una consulta per extreure el codi alumne amb aquest codi eliminem l'alumne en qüestió
+  * realitzem una consulta per extreure el codi alumne amb aquest codi eliminem l'alumne en qüestió i mitjançant una transacció eliminem les assignatures que cursa
   */
 
  function Elimin_Alum(){
@@ -132,11 +132,17 @@ function assignatura(){
         }
      
         //echo $codi_assignatura;
-        $sentencia = $gbd -> prepare ( "DELETE FROM alumne WHERE codi_alumne = :codi_alumne"); 
-        $sentencia -> bindParam (':codi_alumne', $codi_alumne);    
+        $gbd -> beginTransaction ();
+        $sentencia = $gbd -> prepare ( "DELETE FROM alumne WHERE codi_alumne = :codi_alumne");
+        $sentencia2= $gbd -> prepare ( "DELETE FROM cursen WHERE codi_alumne = :codi_alumne");
+        $sentencia -> bindParam (':codi_alumne', $codi_alumne);
+        $sentencia2 -> bindParam (':codi_alumne', $codi_alumne);    
         $sentencia -> execute ();
+        $sentencia2 -> execute ();
+        $gbd -> commit ();
         echo"<p>Eliminació correcte</p>";
     }catch ( Exception $e ) {
+      $gbd -> rollBack ();
       echo"No s'ha pogut eliminar l'alumne!";
     }
 }

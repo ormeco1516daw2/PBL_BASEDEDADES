@@ -139,7 +139,7 @@ spl_autoload_register(function ($classe) {
         </form>
         <form action='insertar.php' method='post'><!--aqui posarem el php on enviem els parmetre seleccionat -->
             <div class="alumnes">
-                <h3>Selecciona un alumne per eliminar-lo //per desenvolupar </h3>
+                <h3>Selecciona un alumne per eliminar-lo  </h3>
                 <select id="Elimina_alumne" name="Elimina_alumne" class="selectpicker">
                     <?php
                     //Fem un carrega amb pdo del nom dels alumnes por pder-los seleccionar y treure grafiques 
